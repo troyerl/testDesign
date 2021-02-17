@@ -5,13 +5,14 @@
     <template slot="header">
       <div class="d-flex justify-content-between">
         <div>
-          <h4 class="card-title">Total Uses</h4>
+          <h4 class="card-title">Total Users</h4>
           <p class="card-category">Per Month</p>
+
         </div>
         <div class="d-flex align-items-center">
-          <i class="nc-icon nc-stre-left text-dark"></i>
+          <i @click="changeYear(-1)" class="nc-icon nc-stre-left text-dark"></i>
           <h4 class="card-title mx-3">{{year}}</h4>
-          <i class="nc-icon nc-stre-right text-dark"></i>
+          <i @click="changeYear(1)" class="nc-icon nc-stre-right text-dark"></i>
         </div>
       </div>
     </template>
@@ -27,7 +28,7 @@
 import ChartCard from '../Cards/ChartCard';
 
 export default {
-  name: 'UsesPerMonth',
+  name: 'UsersPerMonth',
   components: {
     ChartCard
   },
@@ -39,12 +40,12 @@ export default {
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           series: [
             [],
-            [287, 403],
+            [6, 8, 15, 4, 10, 20, 17, 2],
           ]
         },
         options: {
           low: 0,
-          high: 800,
+          high: 20,
           showArea: false,
           height: '245px',
           axisX: {
@@ -68,6 +69,11 @@ export default {
           }]
         ]
       },
+    }
+  },
+  methods: {
+    changeYear(direction) {
+      this.year += direction;
     }
   }
 }

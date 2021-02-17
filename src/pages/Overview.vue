@@ -36,11 +36,12 @@
               <!-- <p class="card-category">Last Campaign Performance</p> -->
             </template>
             <template slot="footer">
-              <div class="legend">
-                <i class="fa fa-circle text-info"></i> Open
-                <i class="fa fa-circle text-danger"></i> Bounce
-                <i class="fa fa-circle text-warning"></i> Unsubscribe
-                <i class="fa fa-circle text-warning"></i> Unsubscribe
+              <div class="legend text-center">
+                <i class="fa fa-circle text-info"></i> Peppa Pig
+                <i class="fa fa-circle text-danger"></i> Superhero Videos
+                <i class="fa fa-circle text-warning"></i> Live News
+                <i class="fa fa-circle text-warning"></i> Twitch
+                <i class="fa fa-circle text-warning"></i> Princess
               </div>
             </template>
           </chart-card>
@@ -49,61 +50,25 @@
 
       <div class="row">
         <div class="col-md-6">
+          <UsersPerMonth/>
+        </div>
+
+        <div class="col-md-6">
           <chart-card
             :chart-data="barChart.data"
             :chart-options="barChart.options"
             :chart-responsive-options="barChart.responsiveOptions"
             chart-type="Bar">
             <template slot="header">
-              <h4 class="card-title">2014 Sales</h4>
-              <p class="card-category">All products including Taxes</p>
+              <h4 class="card-title">Usage Per User</h4>
+              <p class="card-category">Each Month</p>
             </template>
             <template slot="footer">
               <div class="legend">
-                <i class="fa fa-circle text-info"></i> Tesla Model S
-                <i class="fa fa-circle text-danger"></i> BMW 5 Series
-              </div>
-              <hr>
-              <div class="stats">
-                <i class="fa fa-check"></i> Data information certified
+                <i class="fa fa-circle text-info"></i> Destrict Users
               </div>
             </template>
           </chart-card>
-        </div>
-
-        <div class="col-md-6">
-          <card>
-            <template slot="header">
-              <h5 class="title">Tasks</h5>
-              <p class="category">Backend development</p>
-            </template>
-            <l-table :data="tableData.data"
-                     :columns="tableData.columns">
-              <template slot="columns"></template>
-
-              <template slot-scope="{row}">
-                <td>
-                  <base-checkbox v-model="row.checked"></base-checkbox>
-                </td>
-                <td>{{row.title}}</td>
-                <td class="td-actions text-right">
-                  <button type="button" class="btn-simple btn btn-xs btn-info" v-tooltip.top-center="editTooltip">
-                    <i class="fa fa-edit"></i>
-                  </button>
-                  <button type="button" class="btn-simple btn btn-xs btn-danger" v-tooltip.top-center="deleteTooltip">
-                    <i class="fa fa-times"></i>
-                  </button>
-                </td>
-              </template>
-            </l-table>
-            <div class="footer">
-              <hr>
-              <div class="stats">
-                <i class="fa fa-history"></i> Updated 3 minutes ago
-              </div>
-            </div>
-          </card>
-
         </div>
       </div>
     </div>
@@ -118,6 +83,7 @@
   import AverageDuration from '../components/Analytics/AverageDuration';
   import AmountSaved from '../components/Analytics/AmountSaved';
   import TotalUsers from '../components/Analytics/TotalUsers';
+  import UsersPerMonth from '../components/Analytics/UsersPerMonth';
 
   export default {
     components: {
@@ -127,7 +93,8 @@
       UsesPerMonth,
       AverageDuration,
       AmountSaved,
-      TotalUsers
+      TotalUsers,
+      UsersPerMonth
     },
     data () {
       return {
@@ -140,46 +107,11 @@
             series: [40, 20, 20, 20]
           }
         },
-        lineChart: {
-          data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            series: [
-              [],
-              [287, 403],
-            ]
-          },
-          options: {
-            low: 0,
-            high: 800,
-            showArea: false,
-            height: '245px',
-            axisX: {
-              showGrid: false
-            },
-            lineSmooth: true,
-            showLine: true,
-            showPoint: true,
-            fullWidth: true,
-            chartPadding: {
-              right: 50
-            }
-          },
-          responsiveOptions: [
-            ['screen and (max-width: 640px)', {
-              axisX: {
-                labelInterpolationFnc (value) {
-                  return value[0]
-                }
-              }
-            }]
-          ]
-        },
         barChart: {
           data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
             series: [
               [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-              [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695]
             ]
           },
           options: {
