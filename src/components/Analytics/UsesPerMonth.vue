@@ -8,10 +8,20 @@
           <h4 class="card-title">Total Uses</h4>
           <p class="card-category">Per Month</p>
         </div>
-        <div class="d-flex align-items-center">
+        <!-- <div class="d-flex align-items-center">
           <i class="nc-icon nc-stre-left text-dark"></i>
           <h4 class="card-title mx-3">{{year}}</h4>
           <i class="nc-icon nc-stre-right text-dark"></i>
+        </div> -->
+        <div class="dropdown">
+          <a @click="onToggle" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            {{year}}
+          </a>
+          <div id="myDropdown" :class="`${showYears ? 'show' : ''} dropdown-content`">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
         </div>
       </div>
     </template>

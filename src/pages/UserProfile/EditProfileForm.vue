@@ -5,10 +5,10 @@
       <div class="row">
         <div class="col-md-5">
           <base-input type="text"
-                    label="Company"
+                    label="Hospital"
                     :disabled="true"
-                    placeholder="Light dashboard"
-                    v-model="user.company">
+                    placeholder="Hospital Name"
+                    v-model="user.hospital">
           </base-input>
         </div>
         <div class="col-md-3">
@@ -78,7 +78,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-12">
           <div class="form-group">
             <label>About Me</label>
@@ -88,7 +88,7 @@
               </textarea>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="text-center">
         <button type="submit" class="btn btn-info btn-fill float-right" @click.prevent="updateProfile">
           Update Profile
@@ -108,11 +108,11 @@
     data () {
       return {
         user: {
-          company: 'Light dashboard',
-          username: 'michael23',
-          email: '',
-          firstName: 'Mike',
-          lastName: 'Andrew',
+          hospital: "Riley Children's Hospital",
+          username: 'troyerl',
+          email: 'troyerlogan@gmail.com',
+          firstName: 'Logan',
+          lastName: 'Troyer',
           address: 'Melbourne, Australia',
           city: 'melbourne',
           country: 'Australia',

@@ -1,11 +1,11 @@
 <template>
   <stats-card>
     <div slot="header" class="icon-success">
-      <i class="nc-icon nc-light-3 text-success"></i>
+      <i class="nc-icon nc-favourite-28 text-success"></i>
     </div>
     <div slot="content">
-      <p class="card-category">Amount Saved</p>
-      <h4 class="card-title">$1,345</h4>
+      <p class="card-category">Most Popular Playlist</p>
+      <h4 class="card-title">Peppa The Pig</h4>
     </div>
   </stats-card>
 </template>

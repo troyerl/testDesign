@@ -6,21 +6,13 @@
           <AverageDuration/>
         </div>
         <div class="col-xl-3 col-md-6">
-          <AmountSaved/>
+          <FavoritePlaylist/>
         </div>
         <div class="col-xl-3 col-md-6">
           <TotalUsers/>
         </div>
         <div class="col-xl-3 col-md-6">
-          <stats-card>
-            <div slot="header" class="icon-info">
-              <i class="nc-icon nc-favourite-28 text-primary"></i>
-            </div>
-            <div slot="content">
-              <p class="card-category">Followers</p>
-              <h4 class="card-title">+45</h4>
-            </div>
-          </stats-card>
+          <TotalUsage/>
         </div>
 
       </div>
@@ -30,21 +22,7 @@
         </div>
 
         <div class="col-md-4">
-          <chart-card :chart-data="pieChart.data" chart-type="Pie">
-            <template slot="header">
-              <h4 class="card-title">Playlist Statistics</h4>
-              <!-- <p class="card-category">Last Campaign Performance</p> -->
-            </template>
-            <template slot="footer">
-              <div class="legend text-center">
-                <i class="fa fa-circle text-info"></i> Peppa Pig
-                <i class="fa fa-circle text-danger"></i> Superhero Videos
-                <i class="fa fa-circle text-warning"></i> Live News
-                <i class="fa fa-circle text-warning"></i> Twitch
-                <i class="fa fa-circle text-warning"></i> Princess
-              </div>
-            </template>
-          </chart-card>
+          <UsagePerPlaylist/>
         </div>
       </div>
 
@@ -77,36 +55,34 @@
 <script>
   import ChartCard from 'src/components/Cards/ChartCard.vue'
   import StatsCard from 'src/components/Cards/StatsCard.vue'
-  import LTable from 'src/components/Table.vue'
+  import BaseDropdown from '../components/BaseDropdown';
 
   import UsesPerMonth from '../components/Analytics/UsesPerMonth';
   import AverageDuration from '../components/Analytics/AverageDuration';
-  import AmountSaved from '../components/Analytics/AmountSaved';
+  import FavoritePlaylist from '../components/Analytics/FavoritePlaylist';
   import TotalUsers from '../components/Analytics/TotalUsers';
   import UsersPerMonth from '../components/Analytics/UsersPerMonth';
+  import UsagePerPlaylist from '../components/Analytics/UsagePerPlaylist';
+  import TotalUsage from '../components/Analytics/TotalUsage';
 
   export default {
     components: {
-      LTable,
       ChartCard,
       StatsCard,
       UsesPerMonth,
       AverageDuration,
-      AmountSaved,
+      FavoritePlaylist,
       TotalUsers,
-      UsersPerMonth
+      UsersPerMonth,
+      UsagePerPlaylist,
+      BaseDropdown,
+      TotalUsage
     },
     data () {
       return {
         editTooltip: 'Edit Task',
         deleteTooltip: 'Remove',
-        year: 2021,
-        pieChart: {
-          data: {
-            labels: ['40%', '20%', '20%', '20%'],
-            series: [40, 20, 20, 20]
-          }
-        },
+        
         barChart: {
           data: {
             labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
@@ -132,19 +108,6 @@
             }]
           ]
         },
-        tableData: {
-          data: [
-            {title: 'Sign contract for "What are conference organizers afraid of?"', checked: false},
-            {title: 'Lines From Great Russian Literature? Or E-mails From My Boss?', checked: true},
-            {
-              title: 'Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit',
-              checked: true
-            },
-            {title: 'Create 4 Invisible User Experiences you Never Knew About', checked: false},
-            {title: 'Read "Following makes Medium better"', checked: false},
-            {title: 'Unfollow 5 enemies from twitter', checked: false}
-          ]
-        }
       }
     }
   }
