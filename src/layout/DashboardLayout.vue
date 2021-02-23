@@ -13,8 +13,8 @@
         <i class="nc-icon nc-notes"></i>
         <p>Playlists</p>
       </sidebar-link>
-      <sidebar-link to="/admin/typography">
-        <i class="nc-icon nc-paper-2"></i>
+      <sidebar-link to="/admin/typography/new">
+        <i class="nc-icon nc-simple-add"></i>
         <p>New Playlist</p>
       </sidebar-link>
       <sidebar-link to="/admin/maps">

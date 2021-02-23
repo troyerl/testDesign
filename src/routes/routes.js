@@ -39,7 +39,7 @@ const routes = [
         component: TableList
       },
       {
-        path: 'typography',
+        path: 'typography/:id',
         name: 'Typography',
         component: Typography
       },

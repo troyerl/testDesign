@@ -1,6 +1,6 @@
 <template>
   <card>
-    <h4 slot="header" class="card-title">Edit Profile</h4>
+    <h4 slot="header" class="card-title">Profile Info</h4>
     <form>
       <div class="row">
         <div class="col-md-5">
@@ -44,6 +44,8 @@
         </div>
       </div>
 
+      <hr>
+      <h4 slot="header" class="card-title">Hospital Info</h4>
       <div class="row">
         <div class="col-md-12">
           <base-input type="text"
@@ -113,10 +115,10 @@
           email: 'troyerlogan@gmail.com',
           firstName: 'Logan',
           lastName: 'Troyer',
-          address: 'Melbourne, Australia',
-          city: 'melbourne',
-          country: 'Australia',
-          postalCode: '',
+          address: '705 Riley Hospital Dr',
+          city: 'Indianapolis',
+          country: 'United States',
+          postalCode: '46202',
           aboutMe: `Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.`
         }
       }

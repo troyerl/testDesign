@@ -5582,7 +5582,8 @@ strong {
   z-index: 2;
   float: right;
   width: calc(100% - 260px);
-  min-height: 100%;
+  min-height: 100% !important;
+  height: auto;
 }
 .main-panel > .content {
   padding: 30px 15px 0 15px;
