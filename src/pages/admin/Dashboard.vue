@@ -32,31 +32,13 @@
         </div>
 
         <div class="col-md-6">
-          <chart-card
-            :chart-data="barChart.data"
-            :chart-options="barChart.options"
-            :chart-responsive-options="barChart.responsiveOptions"
-            chart-type="Bar">
-            <template slot="header">
-              <h4 class="card-title">Usage Per User</h4>
-              <p class="card-category">Each Month</p>
-            </template>
-            <template slot="footer">
-              <div class="legend">
-                <i class="fa fa-circle text-info"></i> Destrict Users
-              </div>
-            </template>
-          </chart-card>
+          <TotalUsagePerUser/>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-  import ChartCard from 'src/components/Cards/ChartCard.vue'
-  import StatsCard from 'src/components/Cards/StatsCard.vue'
-  import BaseDropdown from 'src/components/BaseDropdown';
-
   import UsesPerMonth from 'src/components/Analytics/UsesPerMonth';
   import AverageDuration from 'src/components/Analytics/AverageDuration';
   import FavoritePlaylist from 'src/components/Analytics/FavoritePlaylist';
@@ -64,19 +46,18 @@
   import UsersPerMonth from 'src/components/Analytics/UsersPerMonth';
   import UsagePerPlaylist from 'src/components/Analytics/UsagePerPlaylist';
   import TotalUsage from 'src/components/Analytics/TotalUsage';
+  import TotalUsagePerUser from 'src/components/Analytics/TotalUsagePerUser';
 
   export default {
     components: {
-      ChartCard,
-      StatsCard,
       UsesPerMonth,
       AverageDuration,
       FavoritePlaylist,
       TotalUsers,
       UsersPerMonth,
       UsagePerPlaylist,
-      BaseDropdown,
-      TotalUsage
+      TotalUsage,
+      TotalUsagePerUser
     },
     data () {
       return {

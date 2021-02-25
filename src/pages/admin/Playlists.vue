@@ -17,7 +17,7 @@
                 />
               </div>
             </template>
-            <table class="table table-striped table-hover mx-4">
+            <table class="table table-hover mx-4">
               <thead>
                 <tr>
                   <th :key="header" v-for="header in headers" scope="col">{{header}}</th>
@@ -54,6 +54,7 @@
   import BaseInput from 'src/components/Inputs/BaseInput';
 
   import { mapState } from 'vuex';
+  import routes from 'src/routes/routes';
 
   export default {
     components: {
@@ -76,43 +77,11 @@
           'Last Updated',
           'Actions'
         ],
-        playlists: [
-          {
-            id: 'fasfasfasfsf',
-            name: 'Peppa Pig',
-            totalPlays: 12,
-            lastUpdated: '12/20/20'
-          },
-          {
-            id: 'fasfasfasfsf1',
-            name: 'Superhero Videos',
-            totalPlays: 12,
-            lastUpdated: '12/20/20'
-          },
-          {
-            id: 'fasfasfasfsf2',
-            name: 'Princess',
-            totalPlays: 12,
-            lastUpdated: '12/20/20'
-          },
-          {
-            id: 'fasfasfasfsf3',
-            name: 'Live News',
-            totalPlays: 12,
-            lastUpdated: '12/20/20'
-          },
-          {
-            id: 'fasfasfasfsf4',
-            name: 'Twitch',
-            totalPlays: 12,
-            lastUpdated: '12/20/20'
-          }
-        ]
       }
     },
     methods: {
       onEdit(id) {
-        this.$router.push(`typography/${id}`);
+        this.$router.push({ name: routes.admin.playlist.name, params: { id }});
       },
       getUpdatedDate(date) {
         let updatedDate = new Date(date);

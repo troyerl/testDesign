@@ -62,9 +62,6 @@
         routes: route.admin
       }
     },
-    mounted() {
-      console.log(this.routes);
-    },
     methods: {
       toggleSidebar () {
         if (this.$sidebar.showSidebar) {

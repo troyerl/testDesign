@@ -5,7 +5,7 @@
     </div>
     <div slot="content">
       <p class="card-category">Total Users</p>
-      <h4 class="card-title">23</h4>
+      <h4 class="card-title">{{totalUsers}}</h4>
     </div>
   </stats-card>
 </template>
@@ -13,15 +13,17 @@
 <script>
 import StatsCard from '../Cards/StatsCard';
 
+import { mapState } from 'vuex';
+
 export default {
   name: 'TotalUsers',
   components: {
     StatsCard
   },
-  data() {
-    return {
-
-    }
+  computed: {
+    ...mapState('analytics', [
+      'totalUsers'
+    ])
   }
 }
 </script>

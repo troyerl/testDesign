@@ -5,7 +5,7 @@
     </div>
     <div slot="content">
       <p class="card-category">Average Duration</p>
-      <h4 class="card-title">00:19:34</h4>
+      <h4 class="card-title">{{ averageDuration }}</h4>
     </div>
   </stats-card>
 </template>
@@ -13,15 +13,17 @@
 <script>
 import StatsCard from '../Cards/StatsCard';
 
+import { mapState } from 'vuex';
+
 export default {
   name: 'AverageDuration',
   components: {
     StatsCard
   },
-  data() {
-    return {
-
-    }
+  computed: {
+    ...mapState('analytics', [
+      'averageDuration'
+    ])
   }
 }
 </script>

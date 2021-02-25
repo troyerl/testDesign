@@ -5,7 +5,7 @@
     </div>
     <div slot="content">
       <p class="card-category">Most Popular Playlist</p>
-      <h4 class="card-title resize-on-small">Peppa The Pig</h4>
+      <h4 class="card-title resize-on-small">{{favoritePlaylist}}</h4>
     </div>
   </stats-card>
 </template>
@@ -13,15 +13,17 @@
 <script>
 import StatsCard from '../Cards/StatsCard';
 
+import { mapState } from 'vuex';
+
 export default {
   name: 'AmountSaved',
   components: {
     StatsCard
   },
-  data() {
-    return {
-
-    }
+  computed: {
+    ...mapState('analytics', [
+      'favoritePlaylist'
+    ])
   }
 }
 </script>
