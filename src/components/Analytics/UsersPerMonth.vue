@@ -15,14 +15,9 @@
           <i @click="changeYear(1)" class="nc-icon nc-stre-right text-dark"></i>
         </div> -->
         <div class="dropdown">
-          <a @click="onToggle" class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
             {{year}}
           </a>
-          <div id="myDropdown" :class="`${showYears ? 'show' : ''} dropdown-content`">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
         </div>
       </div>
     </template>
@@ -45,7 +40,6 @@ export default {
   data() {
     return {
       year: new Date().getFullYear(),
-      showYears: false,
       lineChart: {
         data: {
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -86,9 +80,6 @@ export default {
     changeYear(direction) {
       this.year += direction;
     },
-    onToggle() {
-      this.showYears = !this.showYears;
-    }
   }
 }
 </script>

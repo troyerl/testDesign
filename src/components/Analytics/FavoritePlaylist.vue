@@ -5,7 +5,7 @@
     </div>
     <div slot="content">
       <p class="card-category">Most Popular Playlist</p>
-      <h4 class="card-title">Peppa The Pig</h4>
+      <h4 class="card-title resize-on-small">Peppa The Pig</h4>
     </div>
   </stats-card>
 </template>
@@ -27,5 +27,9 @@ export default {
 </script>
 
 <style>
-
+@media only screen and (min-width: 1200px) {
+  .resize-on-small {
+    font-size: 18px;
+  }
+}
 </style>

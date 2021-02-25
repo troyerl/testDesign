@@ -1,23 +1,23 @@
 <template>
   <div class="wrapper">
     <side-bar>
-      <sidebar-link to="/admin/overview">
+      <sidebar-link :to="{name: routes.dashboard.name }">
         <i class="nc-icon nc-chart-pie-35"></i>
         <p>Dashboard</p>
       </sidebar-link>
-      <sidebar-link to="/admin/user">
+      <sidebar-link :to="{name: `${routes.userProfile.name}` }">
         <i class="nc-icon nc-circle-09"></i>
         <p>Account Settings</p>
       </sidebar-link>
-      <sidebar-link to="/admin/table-list">
+      <sidebar-link :to="{name: `${routes.playlists.name}` }">
         <i class="nc-icon nc-notes"></i>
         <p>Playlists</p>
       </sidebar-link>
-      <sidebar-link to="/admin/typography/new">
+      <sidebar-link :to="{name: `${routes.playlist.name}`, params: { id: 'new' }}">
         <i class="nc-icon nc-simple-add"></i>
         <p>New Playlist</p>
       </sidebar-link>
-      <sidebar-link to="/admin/maps">
+      <sidebar-link :to="{name: `${routes.map.name}` }">
         <i class="nc-icon nc-pin-3"></i>
         <p>Maps</p>
       </sidebar-link>
@@ -48,17 +48,31 @@
   import TopNavbar from './TopNavbar.vue'
   import ContentFooter from './ContentFooter.vue'
   import DashboardContent from './Content.vue'
+
+  import route from '../routes/routes';
+
   export default {
     components: {
       TopNavbar,
       ContentFooter,
       DashboardContent,
     },
+    data() {
+      return {
+        routes: route.admin
+      }
+    },
+    mounted() {
+      console.log(this.routes);
+    },
     methods: {
       toggleSidebar () {
         if (this.$sidebar.showSidebar) {
           this.$sidebar.displaySidebar(false)
         }
+      },
+      onClick(name) {
+        this.$route.push({ name });
       }
     }
   }

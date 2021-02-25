@@ -55,15 +55,15 @@
 <script>
   import ChartCard from 'src/components/Cards/ChartCard.vue'
   import StatsCard from 'src/components/Cards/StatsCard.vue'
-  import BaseDropdown from '../components/BaseDropdown';
+  import BaseDropdown from 'src/components/BaseDropdown';
 
-  import UsesPerMonth from '../components/Analytics/UsesPerMonth';
-  import AverageDuration from '../components/Analytics/AverageDuration';
-  import FavoritePlaylist from '../components/Analytics/FavoritePlaylist';
-  import TotalUsers from '../components/Analytics/TotalUsers';
-  import UsersPerMonth from '../components/Analytics/UsersPerMonth';
-  import UsagePerPlaylist from '../components/Analytics/UsagePerPlaylist';
-  import TotalUsage from '../components/Analytics/TotalUsage';
+  import UsesPerMonth from 'src/components/Analytics/UsesPerMonth';
+  import AverageDuration from 'src/components/Analytics/AverageDuration';
+  import FavoritePlaylist from 'src/components/Analytics/FavoritePlaylist';
+  import TotalUsers from 'src/components/Analytics/TotalUsers';
+  import UsersPerMonth from 'src/components/Analytics/UsersPerMonth';
+  import UsagePerPlaylist from 'src/components/Analytics/UsagePerPlaylist';
+  import TotalUsage from 'src/components/Analytics/TotalUsage';
 
   export default {
     components: {
