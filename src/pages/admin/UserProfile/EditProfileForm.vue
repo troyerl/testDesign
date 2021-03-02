@@ -103,25 +103,9 @@
         'hospitalInfo'
       ])
     },
-    data () {
-      return {
-        user: {
-          hospital: "Riley Children's Hospital",
-          username: 'troyerl',
-          email: 'troyerlogan@gmail.com',
-          firstName: 'Logan',
-          lastName: 'Troyer',
-          address: '705 Riley Hospital Dr',
-          city: 'Indianapolis',
-          country: 'United States',
-          postalCode: '46202',
-          aboutMe: `Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.`
-        }
-      }
-    },
     methods: {
       updateProfile () {
-        alert('Your data: ' + JSON.stringify(this.user))
+        console.log(this.userInfo);
       }
     }
   }

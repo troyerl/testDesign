@@ -25,8 +25,11 @@ export default {
       name: 'map'
     }
   },
-  common: {
-
+  visitor: {
+    container: {
+      route: '/',
+      name: 'visitorContainer'
+    }
   },
   auth: {
 

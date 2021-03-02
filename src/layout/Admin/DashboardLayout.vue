@@ -49,7 +49,7 @@
   import ContentFooter from './ContentFooter.vue'
   import DashboardContent from './Content.vue'
 
-  import route from '../routes/routes';
+  import route from '../../routes/routes';
 
   export default {
     components: {

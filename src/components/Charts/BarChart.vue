@@ -1,8 +1,8 @@
 <script>
-import { Line } from 'vue-chartjs'
+import { Bar } from 'vue-chartjs'
  
 export default {
-  extends: Line,
+  extends: Bar,
   props: ['labels', 'data'],
   mounted () {
     this.renderChart({
@@ -10,9 +10,6 @@ export default {
       datasets: [
         {
           backgroundColor: '#FB404B',
-          borderColor: '#FB404B',
-          fill: false,
-          borderWidth: 3,
           data: this.data
         }
       ]
@@ -21,6 +18,15 @@ export default {
       maintainAspectRatio: false,
       legend: {
         display: false
+      },
+      scales: {
+        yAxes: [{
+          display: true,
+          ticks: {
+            beginAtZero: true,
+  
+          }
+        }]
       },
     })
   }

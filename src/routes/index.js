@@ -1,4 +1,4 @@
-import DashboardLayout from '../layout/DashboardLayout.vue'
+import DashboardLayout from '../layout/Admin/DashboardLayout.vue'
 // GeneralViews
 import NotFound from '../pages/NotFoundPage.vue'
 
@@ -9,13 +9,15 @@ import Playlists from 'src/pages/admin/Playlists.vue'
 import Playlist from 'src/pages/admin/Playlist.vue'
 import Maps from 'src/pages/admin/Maps.vue'
 
+import VisitorContainer from '../layout/Visitors/VisitorContainer.vue';
+
 import route from './routes';
 
 const routes = [
   {
     path: '/',
-    component: DashboardLayout,
-    redirect: `/admin/${route.admin.dashboard.route}`
+    component: VisitorContainer,
+    // redirect: `/admin/${route.admin.dashboard.route}`
   },
   {
     path: route.admin.container.route,

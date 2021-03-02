@@ -1,8 +1,8 @@
 <template>
-  <chart-card :chart-data="pieChart.data" chart-type="Pie">
+  <!-- <chart-card :chart-data="pieChart.data" chart-type="Pie">
     <template slot="header">
       <h4 class="card-title">Playlist Statistics</h4>
-      <!-- <p class="card-category">Last Campaign Performance</p> -->
+      <p class="card-category">Last Campaign Performance</p>
     </template>
     <template slot="footer">
       <div class="legend text-center">
@@ -13,25 +13,30 @@
         <i class="fa fa-circle text-warning"></i> Princess
       </div>
     </template>
-  </chart-card>
+  </chart-card> -->
+  <Card>
+    <template slot="header">
+      <h4 class="card-title">Playlist Statistics</h4>
+    </template>
+    <PieChart :data="series" :labels="labels"/>
+  </Card>
 </template>
 
 <script>
-import ChartCard from 'src/components/Cards/ChartCard.vue'
+import Card from '../Cards/Card';
+
+import PieChart from '../Charts/PieChart';
 
 export default {
   name: 'UsagePerPlaylist',
   components: {
-    ChartCard
+    Card,
+    PieChart
   },
   data() {
     return {
-      pieChart: {
-        data: {
-          labels: ['40%', '20%', '20%', '20%'],
-          series: [40, 20, 20, 20]
-        }
-      },
+      labels: ['40%', '20%', '20%', '20%'],
+      series: [40, 20, 20, 20]
     }
   }
 }

@@ -1,16 +1,15 @@
 <script>
-import { Line } from 'vue-chartjs'
+import { Pie } from 'vue-chartjs'
  
 export default {
-  extends: Line,
+  extends: Pie,
   props: ['labels', 'data'],
   mounted () {
     this.renderChart({
       labels: this.labels,
       datasets: [
         {
-          backgroundColor: '#FB404B',
-          borderColor: '#FB404B',
+          backgroundColor: ["#FFCA3E", "#FF6F50", "#D03454", "#9C2162", "#772F67"],
           fill: false,
           borderWidth: 3,
           data: this.data
@@ -19,9 +18,7 @@ export default {
     }, {
       responsive: true,
       maintainAspectRatio: false,
-      legend: {
-        display: false
-      },
+
     })
   }
 }
