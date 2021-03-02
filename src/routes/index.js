@@ -17,7 +17,7 @@ const routes = [
   {
     path: '/',
     component: VisitorContainer,
-    // redirect: `/admin/${route.admin.dashboard.route}`
+    redirect: `/admin/${route.admin.dashboard.route}`
   },
   {
     path: route.admin.container.route,

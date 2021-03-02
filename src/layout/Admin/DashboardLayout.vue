@@ -62,6 +62,9 @@
         routes: route.admin
       }
     },
+    mounted() {
+      this.$store.dispatch('analytics/getReport');
+    },
     methods: {
       toggleSidebar () {
         if (this.$sidebar.showSidebar) {

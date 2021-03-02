@@ -42,12 +42,20 @@ const router = new VueRouter({
   }
 });
 
-import store from './store'
+import store from './store';
+
+import VueApollo from 'vue-apollo'
+import apolloClient from './store/apollo'
+Vue.use(VueApollo)
+const apolloProvider = new VueApollo({
+  defaultClient: apolloClient,
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   render: h => h(App),
   router,
-  store
+  store,
+  apolloProvider
 })
