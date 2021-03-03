@@ -1,11 +1,21 @@
 <script>
 import { Line } from 'vue-chartjs';
+import { mapState } from 'vuex';
  
 export default {
   extends: Line,
-  props: ['labels', 'data'],
+  data() {
+    return {
+      chart: null
+    }
+  },
+  computed: {
+    ...mapState('analytics', [
+      'totalUsagePerMonth',
+    ])
+  },
   mounted () {
-    this.renderChart({
+    this.chart = this.renderChart({
       labels: this.labels,
       datasets: [
         {
@@ -13,7 +23,7 @@ export default {
           borderColor: '#FB404B',
           fill: false,
           borderWidth: 3,
-          data: this.data
+          data: this.totalUsagePerMonth
         }
       ]
     }, {
@@ -23,7 +33,7 @@ export default {
         display: false
       },
     })
-  }
+  },
 }
 
 </script>
