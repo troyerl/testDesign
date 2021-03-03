@@ -26,4 +26,25 @@ export default {
       getTotalUsesPerMonth(hospitalId: $hospitalId, year: $year)
     }
   `,
+  getTotalUsersPerMonth: gql`
+    query($hospitalId: ID!, $year: Int!) {
+      getTotalUsersPerMonth(hospitalId: $hospitalId, year: $year)
+    }
+  `,
+  getTotalUsagePerUserPerMonth: gql`
+    query($hospitalId: ID!, $year: Int!, $month: Int!) {
+      getTotalUsagePerUserPerMonth(hospitalId: $hospitalId, year: $year, month: $month) {
+        _id
+        count
+      }
+    }
+  `,
+  getTotalPlaylistUsage: gql`
+    query($hospitalId: ID!) {
+      getTotalPlaylistUsage(hospitalId: $hospitalId) {
+        playlistName
+        number
+      }
+    }
+  `,
 };

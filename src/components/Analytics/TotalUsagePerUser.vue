@@ -4,7 +4,7 @@
       <h4 class="card-title">Usage Per User</h4>
       <p class="card-category">Each Month</p>
     </template>
-    <BarChart :data="totalUsagePerUser" :labels="this.labels"/>
+    <BarChart :data="totalUsagePerUser.data" :labels="totalUsagePerUser.labels"/>
   </Card>
 </template>
 
@@ -24,11 +24,6 @@ export default {
     ...mapState('analytics', [
       'totalUsagePerUser'
     ])
-  },
-  data() {
-    return {
-      labels: [1,2,3],
-    }
   }
 }
 </script>

@@ -10,7 +10,14 @@ const state = {
   totalUsers: 0,
   totalUsagePerMonth: [],
   totalUsersPerMonth: [],
-  totalUsagePerUser: []
+  totalUsagePerUser: {
+    data: [],
+    labels: []
+  },
+  totalPlaylistUsage: {
+    data: [],
+    labels: []
+  }
 };
 
 const mutations = {
@@ -28,16 +35,31 @@ const mutations = {
   },
   UPDATE_TOTAL_USAGE_PER_MONTH(state, usageArray) {
     state.totalUsagePerMonth = usageArray;
+  },
+  UPDATE_TOTAL_USERS_PER_MONTH(state, userArray) {
+    state.totalUsersPerMonth = userArray;
+  },
+  UPDATE_TOTAL_USAGE_PER_USER(state, usageObject) {
+    state.totalUsagePerUser.data = usageObject.data;
+    state.totalUsagePerUser.labels = usageObject.labels;
+  },
+  UPDATE_TOTAL_PLAYLIST_USAGE(state, usageObject) {
+    state.totalPlaylistUsage.data = usageObject.data;
+    state.totalPlaylistUsage.labels = usageObject.labels;
   }
 };
 
 const actions = {
   getReport({ dispatch }) {
+    let currentDate = new Date();
     dispatch('getAverageDuration');
     dispatch('getMostPopularPlaylist');
     dispatch('getTotalUsers');
     dispatch('getTotalUsage');
-    dispatch('getTotalUsagePerMonth', new Date().getFullYear());
+    dispatch('getTotalUsagePerMonth', currentDate.getFullYear());
+    dispatch('getTotalUsersPerMonth', currentDate.getFullYear());
+    dispatch('getTotalUsagePerUserPerMonth', { year: currentDate.getFullYear(), month: currentDate.getMonth() });
+    dispatch('getTotalPlaylistUsage');
   },
   async getAverageDuration({ commit }) {
     const {
@@ -90,7 +112,7 @@ const actions = {
   async getTotalUsagePerMonth({ commit }, year) {
     const {
       data: {
-        getTotalUsesPerMonth,
+        getTotalUsesPerMonth
       }
     } = await apolloClient.query({
       query: gql.getTotalUsagePerMonth,
@@ -98,6 +120,62 @@ const actions = {
     });
     
     commit('UPDATE_TOTAL_USAGE_PER_MONTH', getTotalUsesPerMonth);
+  },
+  async getTotalUsersPerMonth({ commit }, year) {
+    const {
+      data: {
+        getTotalUsersPerMonth
+      }
+    } = await apolloClient.query({
+      query: gql.getTotalUsersPerMonth,
+      variables: { hospitalId: process.env.VUE_APP_HOSPITAL_ID, year },
+    });
+
+    commit('UPDATE_TOTAL_USERS_PER_MONTH', getTotalUsersPerMonth);
+  },
+  async getTotalUsagePerUserPerMonth({ commit }, { year, month }) {
+    const {
+      data: {
+        getTotalUsagePerUserPerMonth
+      }
+    } = await apolloClient.query({
+      query: gql.getTotalUsagePerUserPerMonth,
+      variables: { hospitalId: process.env.VUE_APP_HOSPITAL_ID, year, month },
+    });
+
+    const tempTotalUsagePerUserReport = {
+      data: [],
+      labels: []
+    };
+
+    getTotalUsagePerUserPerMonth.forEach((user, idx) => {
+      tempTotalUsagePerUserReport.data.push(user.count);
+      tempTotalUsagePerUserReport.labels.push(idx + 1);
+    });
+
+    commit('UPDATE_TOTAL_USAGE_PER_USER', tempTotalUsagePerUserReport);
+  },
+  async getTotalPlaylistUsage({ commit }) {
+    const {
+      data: {
+        getTotalPlaylistUsage
+      }
+    } = await apolloClient.query({
+      query: gql.getTotalPlaylistUsage,
+      variables: { hospitalId: process.env.VUE_APP_HOSPITAL_ID },
+    });
+
+    const tempTotalPlaylistReport = {
+      data: [],
+      labels: []
+    };
+
+    getTotalPlaylistUsage.forEach(playlist => {
+      tempTotalPlaylistReport.data.push(playlist.number);
+      tempTotalPlaylistReport.labels.push(playlist.playlistName);
+    });
+
+    commit('UPDATE_TOTAL_PLAYLIST_USAGE', tempTotalPlaylistReport);
   }
 };
 
