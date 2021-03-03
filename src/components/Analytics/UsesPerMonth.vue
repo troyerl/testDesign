@@ -25,9 +25,6 @@ export default {
     Card,
     LineChart
   },
-  mounted() {
-    dispatch('analytics/getTotalUsagePerMonth', new Date().getFullYear());
-  },
   computed: {
     ...mapState('analytics', [
       'totalUsagePerMonth',

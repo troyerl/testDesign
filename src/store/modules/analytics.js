@@ -37,6 +37,7 @@ const actions = {
     dispatch('getMostPopularPlaylist');
     dispatch('getTotalUsers');
     dispatch('getTotalUsage');
+    dispatch('getTotalUsagePerMonth', new Date().getFullYear());
   },
   async getAverageDuration({ commit }) {
     const {
