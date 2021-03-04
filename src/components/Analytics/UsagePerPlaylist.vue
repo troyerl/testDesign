@@ -1,7 +1,7 @@
 <template>
   <Card>
     <template slot="header">
-      <h4 class="card-title">Playlist Statistics</h4>
+      <h4 class="card-title">Total Playlist Usage</h4>
     </template>
     <PieChart :data="totalPlaylistUsage.data" :labels="totalPlaylistUsage.labels"/>
   </Card>

@@ -19,7 +19,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr :key="medivue.id" v-for="(medivue, idx) of hospitalInfo.mediVues" class="text-center">
+                <tr :key="medivue.id" v-for="(medivue, idx) of mediVues" class="text-center">
                   <td scope="row">{{idx + 1}}</td>
                   <td>{{medivue.name}}</td>
                   <td class="d-flex justify-content-center">
@@ -50,8 +50,8 @@
       Card,
     },
     computed: {
-      ...mapState('auth', [
-        'hospitalInfo'
+      ...mapState('hospitalInfo', [
+        'mediVues'
       ])
     }
   }

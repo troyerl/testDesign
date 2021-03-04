@@ -6,7 +6,7 @@
         <p class="card-category">Per Month</p>
 
       </div>
-      <select class="form-select form-select-sm w-25" aria-label=".form-select-sm example">
+      <select class="form-select form-select-sm w-25" aria-label=".form-select-sm example" @change="onYearChange">
         <option :key="year" v-for="year in years" :value="year" :selected="selectedYear === year">{{year}}</option>
       </select>
     </div>
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     onYearChange(e) {
-      console.log(e.target.value)
+      this.$store.dispatch('analytics/getTotalUsersPerMonth', parseInt(e.target.value));
     }
   }
 }

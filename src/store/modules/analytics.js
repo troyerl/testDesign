@@ -1,7 +1,7 @@
 import gql from '../graphql';
 import apolloClient from '../apollo';
 
-const state = {
+const initState = {
   months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
   years: [2020, 2021],
   averageDuration: null,
@@ -18,7 +18,9 @@ const state = {
     data: [],
     labels: []
   }
-};
+}
+
+const state = JSON.parse(JSON.stringify(initState));
 
 const mutations = {
   UPDATE_AVERAGE_DURATION(state, averageDuration) {
@@ -61,86 +63,88 @@ const actions = {
     dispatch('getTotalUsagePerUserPerMonth', { year: currentDate.getFullYear(), month: currentDate.getMonth() });
     dispatch('getTotalPlaylistUsage');
   },
-  async getAverageDuration({ commit }) {
+  async getAverageDuration({ commit, rootState }) {
     const {
       data: {
         getTotalAverageDurationByHospitalId,
       }
     } = await apolloClient.query({
       query: gql.getAverageDuration,
-      variables: { hospitalId: process.env.VUE_APP_HOSPITAL_ID },
+      variables: { hospitalId: rootState.hospitalInfo.hospitalId },
     });
 
     commit('UPDATE_AVERAGE_DURATION', getTotalAverageDurationByHospitalId);
   },
-  async getMostPopularPlaylist({ commit }) {
+  async getMostPopularPlaylist({ commit, rootState }) {
     const {
       data: {
         getMostPopularPlaylist,
       }
     } = await apolloClient.query({
       query: gql.getMostPopularPlaylist,
-      variables: { hospitalId: process.env.VUE_APP_HOSPITAL_ID },
+      variables: { hospitalId: rootState.hospitalInfo.hospitalId },
     });
 
     commit('UPDATE_MOST_POPULAR_PLAYLIST', getMostPopularPlaylist);
   },
-  async getTotalUsers({ commit }) {
+  async getTotalUsers({ commit, rootState }) {
     const {
       data: {
         getTotalUsers,
       }
     } = await apolloClient.query({
       query: gql.getTotalUsers,
-      variables: { hospitalId: process.env.VUE_APP_HOSPITAL_ID },
+      variables: { hospitalId: rootState.hospitalInfo.hospitalId },
     });
     
     commit('UPDATE_TOTAL_USERS', getTotalUsers);
   },
-  async getTotalUsage({ commit }) {
+  async getTotalUsage({ commit, rootState }) {
     const {
       data: {
         getTotalUsage,
       }
     } = await apolloClient.query({
       query: gql.getTotalUsage,
-      variables: { hospitalId: process.env.VUE_APP_HOSPITAL_ID },
+      variables: { hospitalId: rootState.hospitalInfo.hospitalId },
     });
     
     commit('UPDATE_TOTAL_USAGE', getTotalUsage);
   },
-  async getTotalUsagePerMonth({ commit }, year) {
+  async getTotalUsagePerMonth({ commit, rootState }, year) {
     const {
       data: {
         getTotalUsesPerMonth
       }
     } = await apolloClient.query({
       query: gql.getTotalUsagePerMonth,
-      variables: { hospitalId: process.env.VUE_APP_HOSPITAL_ID, year },
+      variables: { hospitalId: rootState.hospitalInfo.hospitalId, year },
     });
     
     commit('UPDATE_TOTAL_USAGE_PER_MONTH', getTotalUsesPerMonth);
   },
-  async getTotalUsersPerMonth({ commit }, year) {
+  async getTotalUsersPerMonth({ commit, rootState }, year) {
     const {
       data: {
         getTotalUsersPerMonth
       }
     } = await apolloClient.query({
       query: gql.getTotalUsersPerMonth,
-      variables: { hospitalId: process.env.VUE_APP_HOSPITAL_ID, year },
+      variables: { hospitalId: rootState.hospitalInfo.hospitalId, year },
     });
+
+    console.log(getTotalUsersPerMonth);
 
     commit('UPDATE_TOTAL_USERS_PER_MONTH', getTotalUsersPerMonth);
   },
-  async getTotalUsagePerUserPerMonth({ commit }, { year, month }) {
+  async getTotalUsagePerUserPerMonth({ commit, rootState }, { year, month }) {
     const {
       data: {
         getTotalUsagePerUserPerMonth
       }
     } = await apolloClient.query({
       query: gql.getTotalUsagePerUserPerMonth,
-      variables: { hospitalId: process.env.VUE_APP_HOSPITAL_ID, year, month },
+      variables: { hospitalId: rootState.hospitalInfo.hospitalId, year, month },
     });
 
     const tempTotalUsagePerUserReport = {
@@ -155,14 +159,14 @@ const actions = {
 
     commit('UPDATE_TOTAL_USAGE_PER_USER', tempTotalUsagePerUserReport);
   },
-  async getTotalPlaylistUsage({ commit }) {
+  async getTotalPlaylistUsage({ commit, rootState }) {
     const {
       data: {
         getTotalPlaylistUsage
       }
     } = await apolloClient.query({
       query: gql.getTotalPlaylistUsage,
-      variables: { hospitalId: process.env.VUE_APP_HOSPITAL_ID },
+      variables: { hospitalId: rootState.hospitalInfo.hospitalId },
     });
 
     const tempTotalPlaylistReport = {

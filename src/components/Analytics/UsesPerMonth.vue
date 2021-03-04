@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     onYearChange(e) {
-      console.log(e.target.value)
+      this.$store.dispatch('analytics/getTotalUsagePerMonth', parseInt(e.target.value));
     }
   },
   data() {

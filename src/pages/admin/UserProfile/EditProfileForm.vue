@@ -8,21 +8,21 @@
                     label="Hospital"
                     :disabled="true"
                     placeholder="Hospital Name"
-                    v-model="hospitalInfo.name">
+                    v-model="name">
           </base-input>
         </div>
         <div class="col-md-3">
           <base-input type="text"
                     label="Username"
                     placeholder="Username"
-                    v-model="userInfo.username">
+                    v-model="username">
           </base-input>
         </div>
         <div class="col-md-4">
           <base-input type="email"
                     label="Email"
                     placeholder="Email"
-                    v-model="userInfo.email">
+                    v-model="email">
           </base-input>
         </div>
       </div>
@@ -32,14 +32,14 @@
           <base-input type="text"
                     label="First Name"
                     placeholder="First Name"
-                    v-model="userInfo.firstName">
+                    v-model="firstName">
           </base-input>
         </div>
         <div class="col-md-6">
           <base-input type="text"
                     label="Last Name"
                     placeholder="Last Name"
-                    v-model="userInfo.lastName">
+                    v-model="lastName">
           </base-input>
         </div>
       </div>
@@ -51,7 +51,7 @@
           <base-input type="text"
                     label="Address"
                     placeholder="Home Address"
-                    v-model="hospitalInfo.address.street">
+                    v-model="address.street">
           </base-input>
         </div>
       </div>
@@ -61,21 +61,21 @@
           <base-input type="text"
                     label="City"
                     placeholder="City"
-                    v-model="hospitalInfo.address.city">
+                    v-model="address.city">
           </base-input>
         </div>
         <div class="col-md-4">
           <base-input type="text"
                     label="Country"
                     placeholder="Country"
-                    v-model="hospitalInfo.address.country">
+                    v-model="address.country">
           </base-input>
         </div>
         <div class="col-md-4">
           <base-input type="number"
                     label="Postal Code"
                     placeholder="ZIP Code"
-                    v-model="hospitalInfo.address.zipcode">
+                    v-model="address.zipcode">
           </base-input>
         </div>
       </div>
@@ -98,9 +98,15 @@
       Card
     },
     computed: {
+      ...mapState('hospitalInfo', [
+        'name',
+        'address'
+      ]),
       ...mapState('auth', [
-        'userInfo',
-        'hospitalInfo'
+        'firstName',
+        'lastName',
+        'email',
+        'username'
       ])
     },
     methods: {
