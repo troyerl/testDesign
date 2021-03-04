@@ -64,6 +64,7 @@
     },
     mounted() {
       this.$store.dispatch('analytics/getReport');
+      this.$store.dispatch('hospitalInfo/getPlaylistList');
     },
     methods: {
       toggleSidebar () {

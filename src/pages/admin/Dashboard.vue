@@ -58,38 +58,6 @@
       UsagePerPlaylist,
       TotalUsage,
       TotalUsagePerUser
-    },
-    data () {
-      return {
-        editTooltip: 'Edit Task',
-        deleteTooltip: 'Remove',
-        
-        barChart: {
-          data: {
-            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-            series: [
-              [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-            ]
-          },
-          options: {
-            seriesBarDistance: 10,
-            axisX: {
-              showGrid: false
-            },
-            height: '245px'
-          },
-          responsiveOptions: [
-            ['screen and (max-width: 640px)', {
-              seriesBarDistance: 5,
-              axisX: {
-                labelInterpolationFnc (value) {
-                  return value[0]
-                }
-              }
-            }]
-          ]
-        },
-      }
     }
   }
 </script>

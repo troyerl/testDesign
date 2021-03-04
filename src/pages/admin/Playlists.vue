@@ -24,7 +24,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr :key="playlist.id" v-for="(playlist, idx) in hospitalInfo.playlists">
+                <tr :key="playlist.id" v-for="(playlist, idx) in playlistLists">
                   <th scope="row">{{idx + 1}}</th>
                   <td>{{playlist.name}}</td>
                   <td>{{playlist.timesPlayed}}</td>
@@ -63,8 +63,8 @@
       BaseInput
     },
     computed: {
-      ...mapState('auth', [
-        'hospitalInfo'
+      ...mapState('hospitalInfo', [
+        'playlistLists'
       ])
     },
     data () {
@@ -81,7 +81,9 @@
     },
     methods: {
       onEdit(id) {
-        this.$router.push({ name: routes.admin.playlist.name, params: { id }});
+        this.$store.dispatch('hospitalInfo/getPlaylistVideos', id).then(() => {
+          this.$router.push({ name: routes.admin.playlist.name, params: { id }});
+        });
       },
       getUpdatedDate(date) {
         let updatedDate = new Date(date);

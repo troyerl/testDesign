@@ -1,7 +1,11 @@
-import Queries from './queries';
+import analyticsQueries from './queries/analyticsQueries';
+
+import playlistQueries from './queries/playlistQueries';
+
 import Mutations from './mutations';
 
 export default {
-  ...Queries,
+  ...analyticsQueries,
+  ...playlistQueries,
   ...Mutations
 };
