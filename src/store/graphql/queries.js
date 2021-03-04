@@ -47,4 +47,9 @@ export default {
       }
     }
   `,
+  getYearsForHospital: gql`
+    query($hospitalId: ID!) {
+      getYearsForHospital(hospitalId: $hospitalId)
+    }
+  `,
 };
