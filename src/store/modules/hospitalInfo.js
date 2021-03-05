@@ -62,8 +62,33 @@ const actions = {
         query: gql.getPlaylistById,
         variables: { playlistId },
       });
-  
-      commit('UPDATE_PLAYLIST_VIDEOS', getPlaylistById);
+
+      const tempPlaylistInfo = {
+        name: '',
+        videos: []
+      };
+
+      tempPlaylistInfo.name = getPlaylistById.name;
+
+      getPlaylistById.videos.forEach(async (video, idx) => {
+        let newVideo = {
+          id: video.id,
+          videoId: video.url.split('v=')[1],
+          order: idx,
+          title: ''
+        }
+
+        let resData = await fetch("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + newVideo.videoId + "&key=AIzaSyC7twizv7BBLpXLWrCMh0VmWT91uzicw0o", {
+          method: 'GET'
+        });
+
+        let videoData = await resData.json();
+        newVideo.title = videoData.items[0].snippet.title;
+
+        tempPlaylistInfo.videos.push(newVideo);
+      })
+      
+      commit('UPDATE_PLAYLIST_VIDEOS', tempPlaylistInfo);
       resolve();
     })
   }
