@@ -43,6 +43,9 @@ const mutations = {
     state.selectedPlaylist.id = '';
     state.selectedPlaylist.videos = [];
     state.selectedPlaylist.name = '';
+  },
+  UPDATE_MEDIVUE_LIST(state, medivueArray) {
+    state.mediVues = medivueArray;
   }
 };
 
@@ -60,15 +63,21 @@ const actions = {
     commit('UPDATE_LISTS_OF_PLAYLISTS', getHospitalById[0].playlists)
   },
   async getPlaylist({ commit, dispatch }, playlistId) {
-    if (playlistId === 'new') {
-      commit('UPDATE_PLAYLIST_VIDEOS', {
-        id: '',
-        name: '',
-        videos: []
-      })
-    } else {
-      dispatch('fetchPlaylist', playlistId)
-    }
+    return new Promise((resolve, reject) => {
+      if (playlistId === 'new') {
+        const newPlaylist = {
+          id: '',
+          name: '',
+          videos: []
+        }
+        commit('UPDATE_PLAYLIST_VIDEOS', newPlaylist);
+        resolve(newPlaylist);
+      } else {
+        dispatch('fetchPlaylist', playlistId).then((playlist) => {
+          resolve(playlist);
+        })
+      }
+    })
   },
   async fetchPlaylist({ commit }, playlistId) {
     return new Promise(async (resolve, reject) => {
@@ -87,42 +96,67 @@ const actions = {
         videos: []
       };
 
-      getPlaylistById.videos.forEach(async (video, idx) => {
-        let newVideo = {
-          url: video.url,
-          id: video.id,
-          videoId: video.url.split('v=')[1],
-          order: idx,
-          title: ''
+      await (async () => {
+  
+        for (const [idx, video] of getPlaylistById.videos.entries()) {
+          let newVideo = {
+            url: video.url,
+            id: video.id,
+            videoId: video.url.split('v=')[1],
+            order: idx,
+            title: ''
+          }
+
+          let resData = await fetch("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + newVideo.videoId + "&key=AIzaSyC7twizv7BBLpXLWrCMh0VmWT91uzicw0o", {
+            method: 'GET'
+          });
+
+          let videoData = await resData.json();
+          newVideo.title = videoData.items[0].snippet.title;
+
+          tempPlaylistInfo.videos.push(newVideo);
         }
-
-        let resData = await fetch("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + newVideo.videoId + "&key=AIzaSyC7twizv7BBLpXLWrCMh0VmWT91uzicw0o", {
-          method: 'GET'
-        });
-
-        let videoData = await resData.json();
-        newVideo.title = videoData.items[0].snippet.title;
-
-        tempPlaylistInfo.videos.push(newVideo);
-      })
+      })();
       
       commit('UPDATE_PLAYLIST_VIDEOS', tempPlaylistInfo);
-      resolve();
+      resolve(tempPlaylistInfo);
     })
   },
   resetPlaylist({ commit }) {
     commit('RESET_PLAYLIST');
   },
   savePlaylist({ commit }, playlist) {
-    const { videos, ...newPlaylist} = playlist;
-    console.log(playlist);
-    newPlaylist['videoIds'] = videos.map(video => {
-      return video.id;
+    return new Promise(async (resolve, reject ) => {
+      const { videos, ...newPlaylist} = playlist;
+      let tempVideos = [];
+
+      videos.forEach(video => {
+        if (video.url) {
+          tempVideos.push({ id: video.id, url: video.url });
+        }
+      });
+
+      newPlaylist['videos'] = tempVideos;
+
+      await apolloClient.query({
+        query: gql.savePlaylist,
+        variables: { input: newPlaylist },
+      });
+
+      resolve();
     })
+  },
+  async getMediVues({ commit, state }) {
+    const {
+      data: {
+        getMediVuesByHospitalId
+      }
+    } = await apolloClient.query({
+      query: gql.getMediVuesByHospitalId,
+      variables: { hospitalId: state.hospitalId },
+    });
 
-    
-
-    console.log(newPlaylist);
+    commit('UPDATE_MEDIVUE_LIST', getMediVuesByHospitalId);
   }
 };
 

@@ -62,6 +62,9 @@
       Card,
       BaseInput
     },
+    mounted() {
+      this.$store.dispatch('hospitalInfo/getPlaylistList');
+    },
     computed: {
       ...mapState('hospitalInfo', [
         'playlistLists'

@@ -69,11 +69,14 @@
               <h3 class="text-center" v-if="playlist.videos.length === 0">No Videos In Playlist</h3>
 
               <div class="d-flex justify-content-center mt-3" >
-                <button type="submit" class="btn btn-info btn-fill text-center me-3" @click.prevent="addUrl">
+                <button type="submit" class="btn btn-info btn-fill text-center" @click.prevent="addUrl">
                   <i class="nc-icon nc-simple-add"></i> New Url
                 </button>
-                <button v-if="editPlaylist" type="submit" class="btn btn-info btn-fill float-right" @click.prevent="onSave">
+                <button v-if="editPlaylist" type="submit" class="btn btn-success btn-fill float-right mx-3" @click.prevent="onSave">
                   Save
+                </button>
+                <button v-if="editPlaylist" type="submit" class="btn btn-secondary btn-fill float-right" @click.prevent="onCancel">
+                  Cancel
                 </button>
               </div>
             </div>
@@ -81,6 +84,7 @@
               <div class="spinner-border" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
+              <h3>{{loadingText}}</h3>
             </div>
           </card>
         </div>
@@ -116,6 +120,8 @@
       ])
     },
     created() {
+      this.loading = true;
+      this.loadingText = 'Loading Playlist...';
       this.loadPlaylist(this.id);
       this.editTitle = this.id === 'new';
     },
@@ -142,23 +148,23 @@
     },
     methods: {
       loadPlaylist(id) {
-        this.loading = true;
-
-        this.$store.dispatch('hospitalInfo/getPlaylist', id).then(() => {
-          this.playlist = this.selectedPlaylist;
+        this.$store.dispatch('hospitalInfo/getPlaylist', id).then((playlist) => {
+          this.playlist = playlist;
           this.loading = false;
         });
       },
       onDelete(idx) {
         this.playlist.videos.splice(idx, 1);
+        this.onPlaylistChange();
       },
       addUrl() {
         this.playlist.videos.push({
-          id: this.playlist.videos.length,
+          id: `new-${this.playlist.videos.length}`,
           order: this.playlist.videos.length,
           title: '',
           videoId: ''
-        })
+        });
+        this.onPlaylistChange();
       },
       onPlaylistChange() {
         this.editPlaylist = true;
@@ -167,9 +173,18 @@
         this.editTitle = true;
         this.onPlaylistChange();
       },
-      onSave() {
+      onCancel() {
+        this.playlist = JSON.parse(JSON.stringify(this.selectedPlaylist));
         this.editPlaylist = false;
-        this.$store.dispatch('hospitalInfo/savePlaylist', this.playlist);
+        this.editTitle = false;
+      },
+      onSave() {
+        this.loading = true;
+        this.loadingText = 'Saving Playlist Changes...';
+        this.editPlaylist = false;
+        this.$store.dispatch('hospitalInfo/savePlaylist', this.playlist).then(() => {
+          this.loading = false;
+        });
       }
     }
   }

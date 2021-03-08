@@ -1,11 +1,13 @@
 import analyticsQueries from './queries/analyticsQueries';
 
 import playlistQueries from './queries/playlistQueries';
+import playlistMutations from './mutations/playlistMutations';
 
-import Mutations from './mutations';
+import hospitalQueries from './queries/hospitalQueries';
 
 export default {
   ...analyticsQueries,
   ...playlistQueries,
-  ...Mutations
+  ...playlistMutations,
+  ...hospitalQueries
 };
