@@ -16,6 +16,7 @@ export default {
   getPlaylistById: gql`
     query($playlistId: ID!) {
       getPlaylistById(playlistId: $playlistId) {
+        id
         name
         videos {
           id

@@ -12,6 +12,7 @@ const initState = {
   },
   playlistLists: [],
   selectedPlaylist: {
+    id: '',
     name: '',
     videos: []
   },
@@ -34,8 +35,14 @@ const mutations = {
     state.playlistLists = playlistListArray;
   },
   UPDATE_PLAYLIST_VIDEOS(state, selectedPlaylist) {
-    state.selectedPlaylist.name = selectedPlaylist.name;
+    state.selectedPlaylist.id = selectedPlaylist.id;
     state.selectedPlaylist.videos = selectedPlaylist.videos;
+    state.selectedPlaylist.name = selectedPlaylist.name;
+  },
+  RESET_PLAYLIST(state) {
+    state.selectedPlaylist.id = '';
+    state.selectedPlaylist.videos = [];
+    state.selectedPlaylist.name = '';
   }
 };
 
@@ -52,7 +59,18 @@ const actions = {
 
     commit('UPDATE_LISTS_OF_PLAYLISTS', getHospitalById[0].playlists)
   },
-  async getPlaylistVideos({ commit }, playlistId) {
+  async getPlaylist({ commit, dispatch }, playlistId) {
+    if (playlistId === 'new') {
+      commit('UPDATE_PLAYLIST_VIDEOS', {
+        id: '',
+        name: '',
+        videos: []
+      })
+    } else {
+      dispatch('fetchPlaylist', playlistId)
+    }
+  },
+  async fetchPlaylist({ commit }, playlistId) {
     return new Promise(async (resolve, reject) => {
       const {
         data: {
@@ -64,14 +82,14 @@ const actions = {
       });
 
       const tempPlaylistInfo = {
-        name: '',
+        id: getPlaylistById.id,
+        name: getPlaylistById.name,
         videos: []
       };
 
-      tempPlaylistInfo.name = getPlaylistById.name;
-
       getPlaylistById.videos.forEach(async (video, idx) => {
         let newVideo = {
+          url: video.url,
           id: video.id,
           videoId: video.url.split('v=')[1],
           order: idx,
@@ -91,6 +109,20 @@ const actions = {
       commit('UPDATE_PLAYLIST_VIDEOS', tempPlaylistInfo);
       resolve();
     })
+  },
+  resetPlaylist({ commit }) {
+    commit('RESET_PLAYLIST');
+  },
+  savePlaylist({ commit }, playlist) {
+    const { videos, ...newPlaylist} = playlist;
+    console.log(playlist);
+    newPlaylist['videoIds'] = videos.map(video => {
+      return video.id;
+    })
+
+    
+
+    console.log(newPlaylist);
   }
 };
 

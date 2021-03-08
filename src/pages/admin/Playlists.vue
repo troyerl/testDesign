@@ -81,9 +81,8 @@
     },
     methods: {
       onEdit(id) {
-        this.$store.dispatch('hospitalInfo/getPlaylistVideos', id).then(() => {
+          this.$store.dispatch('hospitalInfo/resetPlaylist');
           this.$router.push({ name: routes.admin.playlist.name, params: { id }});
-        });
       },
       getUpdatedDate(date) {
         let updatedDate = new Date(date);
