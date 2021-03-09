@@ -3,38 +3,28 @@ import apolloClient from '../apollo';
 
 const initState = {
   months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  years: [],
-  averageDuration: null,
-  favoritePlaylist: '',
-  totalUsage: 0,
-  totalUsers: 0,
-  totalUsagePerMonth: [],
-  totalUsersPerMonth: [],
-  totalUsagePerUser: {
-    data: [],
-    labels: []
-  },
-  totalPlaylistUsage: {
-    data: [],
-    labels: []
+  report: {
+    years: [],
+    averageDuration: null,
+    mostPopularPlaylist: '',
+    totalUsage: 0,
+    totalUsers: 0,
+    totalUsagePerMonth: [],
+    totalUsersPerMonth: [],
+    totalUsagePerUser: {
+      data: [],
+      labels: []
+    },
+    totalPlaylistUsage: {
+      data: [],
+      labels: []
+    }
   }
-}
+};
 
 const state = JSON.parse(JSON.stringify(initState));
 
 const mutations = {
-  UPDATE_AVERAGE_DURATION(state, averageDuration) {
-    state.averageDuration = averageDuration;
-  },
-  UPDATE_MOST_POPULAR_PLAYLIST(state, playlist) {
-    state.favoritePlaylist = playlist;
-  },
-  UPDATE_TOTAL_USERS(state, totalUserCount) {
-    state.totalUsers = totalUserCount;
-  },
-  UPDATE_TOTAL_USAGE(state, totalUsageCount) {
-    state.totalUsage = totalUsageCount;
-  },
   UPDATE_TOTAL_USAGE_PER_MONTH(state, usageArray) {
     state.totalUsagePerMonth = usageArray;
   },
@@ -42,79 +32,59 @@ const mutations = {
     state.totalUsersPerMonth = userArray;
   },
   UPDATE_TOTAL_USAGE_PER_USER(state, usageObject) {
-    state.totalUsagePerUser.data = usageObject.data;
-    state.totalUsagePerUser.labels = usageObject.labels;
+    state.report['totalUsagePerUser'] = usageObject;
   },
   UPDATE_TOTAL_PLAYLIST_USAGE(state, usageObject) {
-    state.totalPlaylistUsage.data = usageObject.data;
-    state.totalPlaylistUsage.labels = usageObject.labels;
+    state.report['totalPlaylistUsage'] = usageObject;
   },
-  UPDATE_USAGE_YEARS(state, yearsArray) {
-    state.years = yearsArray;
+  UPDATE_REPORT(state, report) {
+    state.report = JSON.parse(JSON.stringify(report));
   }
 };
 
 const actions = {
-  getReport({ dispatch }) {
+  async getReport({ commit, rootState, dispatch }) {
     let currentDate = new Date();
-
-    dispatch('getYearsOfUsage');
-    dispatch('getAverageDuration');
-    dispatch('getMostPopularPlaylist');
-    dispatch('getTotalUsers');
-    dispatch('getTotalUsage');
-    dispatch('getTotalUsagePerMonth', currentDate.getFullYear());
-    dispatch('getTotalUsersPerMonth', currentDate.getFullYear());
-    dispatch('getTotalUsagePerUserPerMonth', { year: currentDate.getFullYear(), month: currentDate.getMonth() });
-    dispatch('getTotalPlaylistUsage');
-  },
-  async getAverageDuration({ commit, rootState }) {
-    const {
-      data: {
-        getTotalAverageDurationByHospitalId,
-      }
-    } = await apolloClient.query({
-      query: gql.getAverageDuration,
-      variables: { hospitalId: rootState.hospitalInfo.hospitalId },
-    });
-
-    commit('UPDATE_AVERAGE_DURATION', getTotalAverageDurationByHospitalId);
-  },
-  async getMostPopularPlaylist({ commit, rootState }) {
-    const {
-      data: {
-        getMostPopularPlaylist,
-      }
-    } = await apolloClient.query({
-      query: gql.getMostPopularPlaylist,
-      variables: { hospitalId: rootState.hospitalInfo.hospitalId },
-    });
-
-    commit('UPDATE_MOST_POPULAR_PLAYLIST', getMostPopularPlaylist);
-  },
-  async getTotalUsers({ commit, rootState }) {
-    const {
-      data: {
-        getTotalUsers,
-      }
-    } = await apolloClient.query({
-      query: gql.getTotalUsers,
-      variables: { hospitalId: rootState.hospitalInfo.hospitalId },
-    });
     
-    commit('UPDATE_TOTAL_USERS', getTotalUsers);
-  },
-  async getTotalUsage({ commit, rootState }) {
     const {
       data: {
-        getTotalUsage,
+        getAnalyticReport,
       }
     } = await apolloClient.query({
-      query: gql.getTotalUsage,
-      variables: { hospitalId: rootState.hospitalInfo.hospitalId },
+      query: gql.getAnalyticReport,
+      variables: { hospitalId: rootState.hospitalInfo.hospitalId, year: currentDate.getFullYear(), month: currentDate.getMonth() },
     });
-    
-    commit('UPDATE_TOTAL_USAGE', getTotalUsage);
+
+    const { totalPlaylistUsage, totalUsagePerUser, ...report} = getAnalyticReport;
+    commit('UPDATE_REPORT', report);
+    dispatch('getLabelsForTotalPlaylistUsage', totalPlaylistUsage);
+    dispatch('getLabelsForTotalUsagePerUser', totalUsagePerUser)
+  },
+  getLabelsForTotalPlaylistUsage({ commit }, totalPlaylistUsageArray) {
+    const tempTotalPlaylistReport = {
+      data: [],
+      labels: []
+    };
+
+    totalPlaylistUsageArray.forEach(playlist => {
+      tempTotalPlaylistReport.data.push(playlist.number);
+      tempTotalPlaylistReport.labels.push(playlist.playlistName);
+    });
+
+    commit('UPDATE_TOTAL_PLAYLIST_USAGE', tempTotalPlaylistReport);
+  },
+  getLabelsForTotalUsagePerUser({ commit }, totalUsageArray) {
+    const tempTotalUsagePerUserReport = {
+      data: [],
+      labels: []
+    };
+
+    totalUsageArray.forEach((user, idx) => {
+      tempTotalUsagePerUserReport.data.push(user.count);
+      tempTotalUsagePerUserReport.labels.push(idx + 1);
+    });
+
+    commit('UPDATE_TOTAL_USAGE_PER_USER', tempTotalUsagePerUserReport);
   },
   async getTotalUsagePerMonth({ commit, rootState }, year) {
     const {
@@ -161,40 +131,6 @@ const actions = {
     });
 
     commit('UPDATE_TOTAL_USAGE_PER_USER', tempTotalUsagePerUserReport);
-  },
-  async getTotalPlaylistUsage({ commit, rootState }) {
-    const {
-      data: {
-        getTotalPlaylistUsage
-      }
-    } = await apolloClient.query({
-      query: gql.getTotalPlaylistUsage,
-      variables: { hospitalId: rootState.hospitalInfo.hospitalId },
-    });
-
-    const tempTotalPlaylistReport = {
-      data: [],
-      labels: []
-    };
-
-    getTotalPlaylistUsage.forEach(playlist => {
-      tempTotalPlaylistReport.data.push(playlist.number);
-      tempTotalPlaylistReport.labels.push(playlist.playlistName);
-    });
-
-    commit('UPDATE_TOTAL_PLAYLIST_USAGE', tempTotalPlaylistReport);
-  },
-  async getYearsOfUsage({ commit, rootState }) {
-    const {
-      data: {
-        getYearsForHospital
-      }
-    } = await apolloClient.query({
-      query: gql.getYearsForHospital,
-      variables: { hospitalId: rootState.hospitalInfo.hospitalId },
-    });
-
-    commit('UPDATE_USAGE_YEARS', getYearsForHospital);
   }
 };
 

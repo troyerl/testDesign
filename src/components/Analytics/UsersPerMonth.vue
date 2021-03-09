@@ -7,10 +7,10 @@
 
       </div>
       <select class="form-select form-select-sm w-25" aria-label=".form-select-sm example" @change="onYearChange">
-        <option :key="year" v-for="year in years" :value="year" :selected="selectedYear === year">{{year}}</option>
+        <option :key="year" v-for="year in report.years" :value="year" :selected="selectedYear === year">{{year}}</option>
       </select>
     </div>
-    <LineChart :data="totalUsersPerMonth" :labels="months"/>
+    <LineChart :data="report.totalUsersPerMonth" :labels="months"/>
   </Card>
 </template>
 
@@ -28,9 +28,8 @@ export default {
   },
   computed: {
     ...mapState('analytics', [
-      'months',
-      'totalUsersPerMonth',
-      'years'
+      'report',
+      'months'
     ])
   },
   data() {

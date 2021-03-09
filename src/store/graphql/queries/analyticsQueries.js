@@ -1,6 +1,27 @@
 import gql from 'graphql-tag';
 
 export default {
+  getAnalyticReport: gql`
+    query($hospitalId: ID!, $year: Int!, $month: Int!) {
+      getAnalyticReport(hospitalId: $hospitalId, year: $year, month: $month) {
+        averageDuration
+        totalUsagePerMonth
+        totalUsersPerMonth
+        totalPlaylistUsage {
+          playlistName
+          number
+        }
+        mostPopularPlaylist
+        totalUsagePerUser {
+          _id
+          count
+        }
+        totalUsers
+        totalUsage
+        yearsOfUsage
+      }
+    }
+  `,
   getAverageDuration: gql`
     query($hospitalId: ID!) {
       getTotalAverageDurationByHospitalId(hospitalId: $hospitalId)

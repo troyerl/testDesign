@@ -5,7 +5,7 @@
     </div>
     <div slot="content">
       <p class="card-category">Most Popular Playlist</p>
-      <h4 class="card-title resize-on-small">{{favoritePlaylist}}</h4>
+      <h4 class="card-title resize-on-small">{{report.mostPopularPlaylist}}</h4>
     </div>
   </stats-card>
 </template>
@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     ...mapState('analytics', [
-      'favoritePlaylist'
+      'report'
     ])
   }
 }

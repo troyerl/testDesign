@@ -5,7 +5,7 @@
     </div>
     <div slot="content">
       <p class="card-category">Total Users</p>
-      <h4 class="card-title">{{totalUsers}}</h4>
+      <h4 class="card-title">{{report.totalUsers}}</h4>
     </div>
   </stats-card>
 </template>
@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     ...mapState('analytics', [
-      'totalUsers'
+      'report'
     ])
   }
 }
