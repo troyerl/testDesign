@@ -46,6 +46,7 @@
                     
                       <div v-if="video.title && video.videoId">
                         <img style="width: 70px;" :src="`https://img.youtube.com/vi/${video.videoId}/default.jpg`" alt=""/>
+
                         <span class="ms-3">{{ video.title }}</span>
                       </div>
                       <div class="w-100 d-flex align-items-center" v-if="!video.title && !video.videoId">
@@ -149,7 +150,7 @@
     methods: {
       loadPlaylist(id) {
         this.$store.dispatch('playlist/getPlaylist', id).then((playlist) => {
-          this.playlist = playlist;
+          this.playlist = JSON.parse(JSON.stringify(playlist));
           this.loading = false;
         });
       },
