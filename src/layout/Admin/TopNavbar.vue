@@ -16,7 +16,7 @@
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="#" @click="goToUserProfile">
               Account
             </a>
           </li>
@@ -31,6 +31,8 @@
   </nav>
 </template>
 <script>
+  import routes from '../../routes/routes';
+
   export default {
     computed: {
       routeName () {
@@ -58,6 +60,9 @@
       },
       hideSidebar () {
         this.$sidebar.displaySidebar(false)
+      },
+      goToUserProfile() {
+        this.$router.push({ name: routes.admin.userProfile.name })
       }
     }
   }

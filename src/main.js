@@ -18,15 +18,15 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 
 // LightBootstrap plugin
-import LightBootstrap from './light-bootstrap-main'
+import LightBootstrap from './light-bootstrap-main';
 
 // router setup
 import routes from './routes';
 
 import './registerServiceWorker'
 // plugin setup
-Vue.use(VueRouter)
-Vue.use(LightBootstrap)
+Vue.use(VueRouter);
+Vue.use(LightBootstrap);
 
 // configure router
 const router = new VueRouter({

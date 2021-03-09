@@ -18,6 +18,7 @@ export default {
       getPlaylistById(playlistId: $playlistId) {
         id
         name
+        hospitalId
         videos {
           id
           url

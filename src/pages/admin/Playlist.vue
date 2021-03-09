@@ -115,7 +115,7 @@
           ghostClass: "ghost"
         };
       },
-      ...mapState('hospitalInfo', [
+      ...mapState('playlist', [
         'selectedPlaylist'
       ])
     },
@@ -148,7 +148,7 @@
     },
     methods: {
       loadPlaylist(id) {
-        this.$store.dispatch('hospitalInfo/getPlaylist', id).then((playlist) => {
+        this.$store.dispatch('playlist/getPlaylist', id).then((playlist) => {
           this.playlist = playlist;
           this.loading = false;
         });
@@ -182,8 +182,28 @@
         this.loading = true;
         this.loadingText = 'Saving Playlist Changes...';
         this.editPlaylist = false;
-        this.$store.dispatch('hospitalInfo/savePlaylist', this.playlist).then(() => {
+        this.$store.dispatch('playlist/savePlaylist', this.playlist).then((playlist) => {
+          this.playlist = JSON.parse(JSON.stringify(playlist));
+          this.editTitle = false;
           this.loading = false;
+          this.$notifications.notify(
+          {
+            message: `<span><b>Playlist Saved Successfully</b></span>`,
+            icon: 'nc-icon nc-check-2',
+            horizontalAlign: 'right',
+            verticalAlign: 'top',
+            type: 'success'
+          })
+        }).catch(err => {
+          this.loading = false;
+          this.$notifications.notify(
+          {
+            message: `<span><b>Error When Saving Playlist, Please try again</b></span>`,
+            icon: 'nc-icon nc-simple-remove',
+            horizontalAlign: 'right',
+            verticalAlign: 'top',
+            type: 'danger'
+          })
         });
       }
     }
