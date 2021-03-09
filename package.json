@@ -23,6 +23,7 @@
     "v-tooltip": "^2.0.0-rc.33",
     "vue": "^2.6.6",
     "vue-apollo": "^3.0.7",
+    "vue-browser-geolocation": "^1.8.0",
     "vue-chartjs": "^3.5.1",
     "vue-notifyjs": "^0.4.3",
     "vue-router": "^3.0.2",

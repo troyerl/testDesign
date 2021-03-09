@@ -6,25 +6,53 @@
     :options="options"
     map-type-id="terrain"
   >
-    <gmap-marker :position="center">
+    <GmapInfoWindow
+      v-for="medivue in mediVues"
+      :key="'infoWindow-' + medivue.id"
+      :clickable="true"
+      :position="{lat: medivue.lat, lng: medivue.lng }"
+      :options="getContents(medivue)"      
+    />
+    <gmap-marker
+      v-for="medivue in mediVues"
+      :key="'marker-' + medivue.id"
+      :position="{lat: medivue.lat, lng: medivue.lng }"
+    >
     </gmap-marker>
   </gmap-map>
 </template>
 <script>
   import {API_KEY} from './Maps/API_KEY'
   import Vue from 'vue'
-  import * as VueGoogleMaps from 'vue2-google-maps'
+  import * as VueGoogleMaps from 'vue2-google-maps';
+
+  import { mapState } from 'vuex';
+
   Vue.use(VueGoogleMaps, {
     load: {
       key: API_KEY
     }
   })
   export default {
+    computed: {
+      ...mapState('hospitalInfo', [
+        'mediVues'
+      ])
+    },
+    mounted() {
+      this.$getLocation()
+      .then(coordinates => {
+        this.center = {
+          lat: coordinates.lat,
+          lng: coordinates.lng
+        }
+      });
+    },
     data () {
       return {
         center: {
-          lat: 40.748817,
-          lng: -73.985428
+          lat: 39.7766427,
+          lng: -86.176593
         },
         options: {
           styles: [{
@@ -65,6 +93,17 @@
             'featureType': 'poi.business',
             'stylers': [{'visibility': 'simplified'}]
           }]
+        }
+      }
+    },
+    methods: {
+      getContents(medivue) {
+        return {
+          content: `<p style="margin-bottom: 0;">${medivue.name}</h4>`,
+          pixelOffset: {
+            width: 0,
+            height: -35
+          }
         }
       }
     }

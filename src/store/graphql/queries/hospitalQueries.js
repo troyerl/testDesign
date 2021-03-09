@@ -5,7 +5,9 @@ export default {
     query($hospitalId: ID!) {
       getMediVuesByHospitalId(hospitalId: $hospitalId) {
         id
-        name
+        name,
+        lng
+        lat
       }
     }
   `,

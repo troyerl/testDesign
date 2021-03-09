@@ -49,7 +49,10 @@ import apolloClient from './store/apollo'
 Vue.use(VueApollo)
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
-})
+});
+
+import VueGeolocation from 'vue-browser-geolocation';
+Vue.use(VueGeolocation);
 
 /* eslint-disable no-new */
 new Vue({

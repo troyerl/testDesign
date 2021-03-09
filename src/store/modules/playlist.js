@@ -91,9 +91,11 @@ const actions = {
             title: ''
           }
 
-          let resData = await fetch("https://www.googleapis.com/youtube/v3/videos?part=snippet&id=" + newVideo.videoId + "&key=AIzaSyC7twizv7BBLpXLWrCMh0VmWT91uzicw0o", {
+          let resData = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${newVideo.videoId}&key=${process.env.VUE_APP_GOOGLE_API}`, {
             method: 'GET'
           });
+
+          
 
           let videoData = await resData.json();
           newVideo.title = videoData.items[0].snippet.title;

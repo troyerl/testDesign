@@ -10,16 +10,7 @@ const initState = {
     country: 'United States',
     zipcode: 46202
   },
-  mediVues: [
-    {
-      id: '5fa05f94bffc8119c82e02bf',
-      name: 'Room 1'
-    },
-    {
-      id: '5fa05f94bffc8119c82e02bf1',
-      name: 'Room 2'
-    }
-  ]
+  mediVues: []
 };
 
 const state = JSON.parse(JSON.stringify(initState));
