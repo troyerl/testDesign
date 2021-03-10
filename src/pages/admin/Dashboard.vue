@@ -27,13 +27,13 @@
       </div>
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <UsersPerMonth/>
         </div>
 
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <TotalUsagePerUser/>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

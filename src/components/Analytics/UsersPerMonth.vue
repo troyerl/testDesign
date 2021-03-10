@@ -7,7 +7,7 @@
 
       </div>
       <select class="form-select form-select-sm w-25" aria-label=".form-select-sm example" @change="onYearChange">
-        <option :key="year" v-for="year in report.years" :value="year" :selected="selectedYear === year">{{year}}</option>
+        <option :key="year" v-for="year in report.yearsOfUsage" :value="year" :selected="selectedYear === year">{{year}}</option>
       </select>
     </div>
     <LineChart :data="report.totalUsersPerMonth" :labels="months"/>
@@ -31,6 +31,9 @@ export default {
       'report',
       'months'
     ])
+  },
+  mounted() {
+    console.log(this.report);
   },
   data() {
     return {
