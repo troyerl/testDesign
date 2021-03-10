@@ -1,11 +1,12 @@
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import config from '../config';
 
 // HTTP connection to the API
 const httpLink = createHttpLink({
   // You should use an absolute URL here
-  uri: process.env.VUE_APP_SERVER_URL + `/graphql`,
+  uri: config.SERVER_URL + `/graphql`,
 });
 
 // Cache implementation

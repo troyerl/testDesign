@@ -1,5 +1,6 @@
 import gql from '../graphql';
 import apolloClient from '../apollo';
+import config from '../../config';
 
 const initState = {
   playlistLists: [],
@@ -91,7 +92,7 @@ const actions = {
             title: ''
           }
 
-          let resData = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${newVideo.videoId}&key=${process.env.VUE_APP_GOOGLE_API}`, {
+          let resData = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${newVideo.videoId}&key=${config.GOOGLE_API}`, {
             method: 'GET'
           });
 

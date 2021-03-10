@@ -25,12 +25,13 @@
   import {API_KEY} from './Maps/API_KEY'
   import Vue from 'vue'
   import * as VueGoogleMaps from 'vue2-google-maps';
+  import config from '../../config';
 
   import { mapState } from 'vuex';
 
   Vue.use(VueGoogleMaps, {
     load: {
-      key: API_KEY
+      key: config.GOOGLE_API
     }
   })
   export default {
