@@ -67,7 +67,7 @@
                 </transition-group>
               </draggable>
 
-              <h3 class="text-center" v-if="playlist.videos.length === 0">No Videos In Playlist</h3>
+              <h3 class="text-center mb-6" v-if="playlist.videos.length === 0">No Videos In Playlist</h3>
 
               <div class="d-flex justify-content-center mt-3" >
                 <button type="submit" class="btn btn-info btn-fill text-center" @click.prevent="addUrl">

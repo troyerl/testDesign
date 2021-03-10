@@ -81,7 +81,7 @@
       </div>
 
       <div class="text-center">
-        <button type="submit" class="btn btn-info btn-fill float-right" @click.prevent="updateProfile">
+        <button type="submit" class="btn btn-danger btn-fill float-right" @click.prevent="updateProfile">
           Update Profile
         </button>
       </div>

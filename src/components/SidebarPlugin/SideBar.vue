@@ -4,10 +4,10 @@
        :data-color="backgroundColor"
        :data-image="backgroundImage">
     <div class="sidebar-wrapper">
-      <div class="logo">
-        <a href="#" class="simple-text logo__container">
+      <div class="logo" @click="onLogoClick">
+        <a class="simple-text logo__container">
             <div class="logo-img">
-                <img src="img/vue-logo.png" alt="">
+                <img src="../../../public/img/iu_health_logo.png" alt="">
             </div>
           {{title}}
         </a>
@@ -34,7 +34,8 @@
   </div>
 </template>
 <script>
-  import SidebarLink from './SidebarLink.vue'
+  import SidebarLink from './SidebarLink.vue';
+  import routes from '../../routes/routes';
 
   export default {
     components: {
@@ -43,7 +44,7 @@
     props: {
       title: {
         type: String,
-        default: 'Medivue'
+        default: 'VueAid'
       },
       backgroundColor: {
         type: String,
@@ -85,6 +86,11 @@
           backgroundImage: `url(${this.backgroundImage})`
         }
       }
+    },
+    methods: {
+      onLogoClick() {
+        this.$router.push({ name: routes.admin.dashboard.name });
+      }
     }
   }
 
@@ -99,5 +105,8 @@
  }
  .sidebar .sidebar-wrapper .logo .logo__container {
    padding-left: 10px;
+ }
+ .logo:hover {
+   cursor: pointer;
  }
 </style>
